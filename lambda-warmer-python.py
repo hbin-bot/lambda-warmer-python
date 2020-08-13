@@ -9,6 +9,7 @@ import asyncio
 instanceID = datetime.datetime.now().strftime("%Y/%m/%d-%I:%M%p") + '-' + ('0000' + str(int(random.random()*1000)))
 warm = False
 funcName = os.environ["AWS_LAMBDA_FUNCTION_NAME"]
+region = os.environ["AWS_REGION"]
 
 async def invoke_lambda(lambda_client, funcName, InvocationTypeString, Payload):
 
@@ -82,7 +83,7 @@ def handler(event, context):
 		if concurrency > 1 and not config['test']:
 
 			# invoke
-			lambda_client = boto3_client('lambda', region_name="us-east-1")
+			lambda_client = boto3_client('lambda', region_name=region)
 
 			loop = asyncio.new_event_loop()
 
